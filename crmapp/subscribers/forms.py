@@ -20,26 +20,26 @@ class AddressMixin(forms.ModelForm):
 
 class SubscriberForm(AddressMixin, UserCreationForm):
 	#User firstname field and adding class "form-control" to HTML
-    first_name = forms.CharField(
-        required = True, widget = forms.TextInput(attrs = {'class' : 'form-control'})
-    	)
-    #User lastname field and adding class "form-control" to HTML
-    last_name = forms.CharField(
-        required = True, widget = forms.TextInput(attrs = {'class' : 'form-control'})
-    	)
+	first_name = forms.CharField(
+		required = True, widget = forms.TextInput(attrs = {'class' : 'form-control'})
+	)
+	#User lastname field and adding class "form-control" to HTML
+	last_name = forms.CharField(
+		required = True, widget = forms.TextInput(attrs = {'class' : 'form-control'})
+	)
 	#User email field and adding class "form-control" to HTML
 	email = forms.EmailField(
 		required = True, widget = forms.TextInput(attrs = {'class' : 'form-control'})
-		)
+	)
 	#User username field and adding class "form-control" to HTML
 	username = forms.CharField(
 		widget = forms.TextInput(attrs = {'class' : 'form-control'})
-		)
+	)
 	#User password field and adding class "form-control" to HTML
 	password1 = forms.CharField(
 		widget = forms.TextInput(attrs = {'class' : 'form-control', 'type' : 'password'})
-		)
+	)
 	#User password verification field and adding class "form-control" to HTML
 	password2 = forms.CharField(
 		widget = forms.TextInput(attrs = {'class' : 'form-control', 'type' : 'password'})
-		)
+	)

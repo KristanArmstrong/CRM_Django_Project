@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 
-from .forms import SubscriberForm
 from .models import Subscriber
+from .forms import SubscriberForm
 
 def subscriber_new(request, template = 'subscribers/subscriber_new.html'):
 	if request.method == 'POST':

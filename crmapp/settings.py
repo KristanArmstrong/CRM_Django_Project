@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
+import os,sys
 from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -35,11 +35,11 @@ SECRET_KEY = get_env_variable('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
-CRMEASY_DB_PASS = False
+CRM_DJANGO_DB_PASS = False
 if ENV_ROLE == 'development':
     DEBUG = True
     TEMPLATE_DEBUG = DEBUG
-    CRMEASY_DB_PASS = get_env_variable('CRMEASY_DB_PASS')
+    CRM_DJANGO_DB_PASS = get_env_variable('CRM_DJANGO_DB_PASS')
 
 ALLOWED_HOSTS = []
 
@@ -73,13 +73,13 @@ WSGI_APPLICATION = 'crmapp.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
-
+#print >>sys.stderr, 'Goodbye, cruel world!'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'crmeasyDB',
+        'NAME': 'crm_django_db',
         'USER': 'postgres',
-        'PASSWORD': CRMEASY_DB_PASS,
+        'PASSWORD': CRM_DJANGO_DB_PASS,
         'HOST': '/tmp',
         'PORT': '5432',
     }

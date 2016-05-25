@@ -41,7 +41,12 @@ if ENV_ROLE == 'development':
     TEMPLATE_DEBUG = DEBUG
     CRM_DJANGO_DB_PASS = get_env_variable('CRM_DJANGO_DB_PASS')
 
-ALLOWED_HOSTS = []
+# Parse database configuration from $DATABASE_URL
+if ENV_ROLE == 'production':
+    import dj_database_url
+    DATABASES['default'] =  dj_database_url.config()
+
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

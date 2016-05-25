@@ -5,9 +5,10 @@ from marketing.views import HomePage
 urlpatterns = patterns('',
 
     # Marketing pages
-    url(r'^$', HomePage.as_view(), name="home"),
+    url(r'^$', HomePage.as_view(), name='home'),
 
     # Subscriber related URLs
+    url(r'^signup/$', 'crmapp.subscibers.views.subscriber_new', name='sub_new'),
 
 
     # Admin URL

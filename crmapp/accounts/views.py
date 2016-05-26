@@ -12,7 +12,21 @@ class AccountList(ListView):
 
 	def get_queryset(self):
 		#Overrides default behavior to only show records for current user
-		account_list = Account.objects.filter(owner = self.request.user)
+		try:
+			#Check if user is performing a search
+			a = self.request.GET.get('account',)
+		except KeyError:
+			a = None
+		if a:
+			#If there is a search filter by that value & current user
+			account_list = Account.objects.filter(
+				name__icontains = a,
+				owner = self.request.user
+			)
+		else:
+			#Otherwise return the accounts for current user
+			account_list = Account.objects.filter(owner = self.request.user)
+		
 		return account_list
 
 	@method_decorator(login_required)

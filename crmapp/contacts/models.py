@@ -16,6 +16,7 @@ class Contact(models.Model):
 	first_name = models.CharField(max_length = 30)
 	last_name  = models.CharField(max_length = 30)
 	created_on = models.DateField(auto_now_add = True)
+	account    = models.ForeignKey(Account)
 
 	class Meta:
 		verbose_name_plural = 'contacts'

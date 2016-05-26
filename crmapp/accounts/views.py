@@ -87,6 +87,11 @@ def account_cru(request, uuid = None):
 		'account' : account
 	}
 
-	template = 'accounts/account_cru.html'
+	if request.is_ajax():
+		#Returning ONLY the account form
+		template = 'accounts/account_item_form.html'
+	else:
+		#Returning ENTIRE account page
+		template = 'accounts/account_cru.html'
 
 	return render(request, template, variables) #returns blank new account form

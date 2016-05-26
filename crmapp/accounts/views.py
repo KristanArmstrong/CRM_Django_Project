@@ -69,7 +69,7 @@ def account_cru(request, uuid = None):
 		if account.owner != request.user:
 			return HttpResponseForbidden()
 	else:
-		account = Account(owner = request.owner)
+		account = Account(owner = request.user)
 
 	if request.POST:
 		#User is creating new account

@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os,sys
 from django.core.exceptions import ImproperlyConfigured
 
+import logging
+
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Handling Key Import Errors

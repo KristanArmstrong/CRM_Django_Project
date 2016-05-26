@@ -8,6 +8,7 @@ from accounts.views import AccountList
 from accounts.urls import account_urls
 from contacts.views import ContactDelete
 from contacts.urls import contact_urls
+from communications.urls import comm_urls
 
 urlpatterns = patterns('',
 

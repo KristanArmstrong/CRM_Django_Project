@@ -20,7 +20,7 @@ def contact_detail(request, uuid):
 @login_required()
 def contact_cru(request, uuid = None, account = None):
 	#Standard CRUD view (POST:extract info make object, GET:render a blank page)
-
+	###ADDED EDITING BELOW###
 	if uuid:
 		#if contact already present -- editing 
 		contact = get_object_or_404(Contact, uuid = uuid)

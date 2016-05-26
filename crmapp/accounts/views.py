@@ -2,7 +2,7 @@ from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseForbidden, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 
 from .models import Account
@@ -54,11 +54,19 @@ def account_detail(request, uuid):
 	return render(request, 'accounts/account_detail.html', variables)
 
 @login_required()
-def account_cru(request):
+def account_cru(request, uuid = None):
 	#Create new accounts and edit existing account records
+	if uuid:
+		#Since UUID is present current user is editing existing account
+		account = get_object_or_404(Account, uuid = uuid) #looks up account by UUID
+		if account.owner != request.user:
+			return HttpResponseForbidden()
+	else:
+		account = Account(owner = request.owner)
+
 	if request.POST:
 		#User is creating new account
-		form = AccountForm(request.POST) #retrieves user input values
+		form = AccountForm(request.POST, instance = account) #retrieves user input values
 		if form.is_valid():
 			#Checks for valid form values 
 			account = form.save(commit = False) #saves user data to DB -- not committed
@@ -72,10 +80,11 @@ def account_cru(request):
 			return HttpResponseRedirect(redirect_url)
 	else:
 		#User is making a GET request so assign blank form object
-		form = AccountForm()
+		form = AccountForm(instance = account)
 
 	variables = {
 		'form' : form,
+		'account' : account
 	}
 
 	template = 'accounts/account_cru.html'

@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponseRedirect, HttpResponseForbidden, Http404
 from django.core.urlresolvers import reverse
+from django.utils.decorators import method_decorator
+from django.views.generic.edit import DeleteView
 
 from .models import Contact
 from .forms import ContactForm
@@ -78,3 +80,34 @@ def contact_cru(request, uuid = None, account = None):
 		template = 'contacts/contact_cru.html'
 
 	return render(request, template, variables)
+
+class ContactMixin(object):
+	model = Contact
+
+	def get_context_data(self, **kwargs):
+		#Giving the object_name variable the correct name
+		kwargs.update({'object_name' : 'Contact'})
+		return kwargs
+
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		#REQUIRED dispatch method w/ custom mixin
+		return super(ContactMixin, self).dispatch(*args, **kwargs)
+
+class ContactDelete(ContactMixin, DeleteView):
+	template_name = 'object_confirm_delete.html'
+
+	def get_object(self, queryset = None):
+		obj = super(ContactDelete, self).get_object()
+		if not obj.owner == self.request.user:
+			raise Http404
+		account = Account.objects.get(id = obj.account.id) #need related account to render HTML
+		self.account = account
+		return obj
+
+	def get_success_url(self):
+		#Direct the user back to the Account Detail page
+		return reverse(
+			'crmapp.accounts.views.account_detail',
+			args = (self.account.uuid,)
+		)

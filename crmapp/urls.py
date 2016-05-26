@@ -32,7 +32,7 @@ urlpatterns = patterns('',
     # Contact related URLS
     url(r'^contact/new/$', 'crmapp.contacts.views.contact_cru', name = 'contact_new'),
     url(r'^contact/(?P<uuid>[\w-]+)/', include(contact_urls)),
-    url(r'^contact/(?P<uuid>[\w-]+)/delete/$', 
+    url(r'^contact/(?P<pk>[\w-]+)/delete/$', 
         ContactDelete.as_view(), 
         name = 'contact_delete'
         ),

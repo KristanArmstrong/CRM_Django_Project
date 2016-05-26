@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 
 from .models import Account
 from .forms import AccountForm
+from crmapp.contacts.models import Contact
 
 class AccountList(ListView):
 	model = Account
@@ -47,8 +48,11 @@ def account_detail(request, uuid):
 		#If current user is not account owner -- return HTTP error 403
 		return HttpResponseForbidden()
 
+	contacts = Contact.objects.filter(account = account)
+
 	variables = {
-		'account' : account,
+		'account'  : account,
+		'contacts' : contacts,
 	} #create dictionary of values to be passed into html
 
 	return render(request, 'accounts/account_detail.html', variables)

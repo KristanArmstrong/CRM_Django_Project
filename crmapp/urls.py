@@ -38,5 +38,6 @@ urlpatterns = patterns('',
         ),
 
     # Communication related URLs
+    url(r'^comm/(?P<uuid>[\w-]+)/', include(comm_urls)),
 
 )

@@ -111,10 +111,12 @@ $(document).ready(function() {
 
 
     // Communications - Use AJAX to get the Communications Add Form
-    $('#co-container').delegate('#new-comm', 'click', function(e) {
+    $('#co-container').delegate('#new-comm-link', 'click', function(e) {
         e.preventDefault();
         $.get($(this).attr('href'), function(data) {
-            $('#co-list').prepend(data);
+            //$('#co-list').prepend(data);
+            $('#co-form-wrapper').prepend(data);
+            $('#new-comm-link').hide();
         })
     });
 
@@ -149,8 +151,11 @@ $(document).ready(function() {
                 resetForm($('#comm-form')); // Resets the form values
                 $('#comm-form').find('ul').remove(); // If there are any errors on the form, remove them all
                 $('#comm-form-internals').hide(); // Hides everything but the subject
-                $('#co-list').prepend(data); // Appends the newly created Communication
+                //$('#co-list').prepend(data); // Prepends the newly created Communication
+                $('#co-list').append(data);  // Appends the newly created Communication
                 $('#comm-form').attr('action', '/comm/new/'); // Make sure the action is set to new
+                form.remove();
+                $('#new-comm-link').show();
             }
         })
     });

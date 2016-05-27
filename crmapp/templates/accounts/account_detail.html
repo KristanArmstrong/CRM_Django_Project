@@ -35,18 +35,20 @@
                 <h4 class="ad-mh m-none">Communications</h4>
             </div>
             <div id="co-body" class="ad-container">
-                {# Communications Item Form #}
-                <div id="co-form-wrapper">
-                    {% include 'communications/comm_item_form.html' %}
-                </div>
                 {# List of Communications #}
                 <ul id="co-list" class="strip-list col-md-12 p-none">
                     {% for comm in communications %}
                         {% include 'communications/comm_item_view.html' %}
                     {% endfor %}
                 </ul>
+                {# Communications Item Form #}
+                <div id="co-form-wrapper" type="hidden" class="p-side">
+                    <!--{% include 'communications/comm_item_form.html' %}-->
+                </div>
+                <a id="new-comm-link" 
+                class="btn btn-link" 
+                href="{% url 'comm_new' %}?account={{ account.id }}">New Communication</a>
             </div>
         </div>
     </div>
-
 {% endblock %}

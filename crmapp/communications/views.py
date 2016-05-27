@@ -9,6 +9,7 @@ from .models import Communication
 from .forms import CommunicationForm
 from crmapp.accounts.models import Account
 
+import sys
 @login_required()
 def comm_detail(request, uuid):
 	
@@ -55,6 +56,7 @@ def comm_cru(request, uuid = None, account = None):
 			#if the form isn't valid, still fetch the account fo it can be passed
 			#to the template
 			account = form.cleaned_data['account']
+			print >>sys.stderr, account
 	else:
 		form = CommunicationForm(instance = comm)
 

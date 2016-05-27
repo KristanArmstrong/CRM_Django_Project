@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.http import HttpResponseForbidden, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
+from django.utils.decorators import method_decorator
+from django.views.generic.edit import DeleteView
 
 from .models import Communication
 from .forms import CommunicationForm
@@ -68,3 +70,31 @@ def comm_cru(request, uuid = None, account = None):
 		template = 'communications/comm_cru.html'
 
 	return render(request, template, variables)
+
+class CommMixin(object):
+	model = Communication
+
+	def get_context_data(self, **kwargs):
+		kwargs.update({'object_name' : 'Communication'})
+		return kwargs
+
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(CommMixin, self).dispatch(*args, **kwargs)
+
+class CommDelete(CommMixin, DeleteView):
+	template_name = 'object_confirm_delete.html'
+
+	def get_object(self, queryset = None):
+		obj = super(CommDelete, self).get_object()
+		if not obj.owner == self.request.user:
+			raise Http404
+		account = Account.objects.get(id = obj.account.id)
+		self.account = account
+		return obj
+
+	def get_success_url(self):
+		return reverse(
+			'crmapp.accounts.views.account_detail',
+			args = (self.account.uuid,)
+		)

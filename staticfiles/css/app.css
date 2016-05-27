@@ -412,7 +412,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 
 .mkt-nav {
-    height: 66px;
+    /*height: 66px; -- Original height was limiting navbar*/
+    height: auto;
     background-color: #f7fbfd;
     border: none;
 }

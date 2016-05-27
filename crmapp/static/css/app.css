@@ -410,6 +410,13 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     min-height: 100%;
 }
 
+/*Overriding Boostraps Navbar border*/
+.navbar-default div.navbar-collapse
+    {
+        1border-top:1px solid #f7fbfd;
+        border-top:none;
+        box-shadow:none;
+    }
 
 .mkt-nav {
     /*height: 66px; -- Original height was limiting navbar*/
